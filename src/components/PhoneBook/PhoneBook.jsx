@@ -3,24 +3,7 @@ import React, { Component } from 'react';
 export default class PhoneBook extends Component {
   state = {
     name: '',
-    number: ''
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { name, number } = this.state;
-    if (!name || !number) {
-      alert('Please enter both name and number.');
-      return;
-    }
-
-    const contactData = {
-      name,
-      number,
-    };
-    this.props.handleAddContact(contactData);
-
-    this.setState({ name: '', number: '' }); 
+    number: '',
   };
 
   handleInputChange = (event) => {
@@ -28,6 +11,12 @@ export default class PhoneBook extends Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.handleAddContact({ ...this.state });
+    this.setState({ name: '', number: '' });
   };
 
   render() {

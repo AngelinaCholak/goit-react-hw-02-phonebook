@@ -1,7 +1,8 @@
-import { nanoid } from 'nanoid';
 import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
 import PhoneBook from './PhoneBook/PhoneBook';
 import Contacts from './Contacts/Contacts';
+import Filter from './Filter/Filter';
 
 export class App extends Component {
   state = {
@@ -23,38 +24,40 @@ export class App extends Component {
 
     const finalContact = {
       ...contactData,
-      id: nanoid()
+      id: nanoid(),
     };
 
     this.setState({
-      contacts: [...this.state.contacts, finalContact]
+      contacts: [...this.state.contacts, finalContact],
     });
   };
 
   handleDeleteContact = (id) => {
     const updatedContacts = this.state.contacts.filter((contact) => contact.id !== id);
     this.setState({
-      contacts: updatedContacts
+      contacts: updatedContacts,
     });
   };
 
   handleFilterChange = (filter) => {
     this.setState({
-      filter: filter
+      filter: filter,
     });
   };
 
   render() {
+    const { contacts, filter } = this.state;
+
     return (
       <div>
         <h1>Phonebook</h1>
         <PhoneBook handleAddContact={this.handleAddContact} />
         <h2>Contacts</h2>
+        <Filter filter={filter} handleFilterChange={this.handleFilterChange} />
         <Contacts
-          contacts={this.state.contacts}
-          filter={this.state.filter}
+          contacts={contacts}
+          filter={filter}
           handleDeleteContact={this.handleDeleteContact}
-          handleFilterChange={this.handleFilterChange}
         />
       </div>
     );

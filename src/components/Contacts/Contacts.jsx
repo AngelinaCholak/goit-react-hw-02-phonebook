@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import css from './contacts.module.css'
 
 export default class Contacts extends Component {
   render() {
@@ -9,11 +10,15 @@ export default class Contacts extends Component {
     );
 
     return (
-      <ul>
+      <ul className={css.contactsList}>
         {filteredContacts.map((contact) => (
           <li key={contact.id}>
             {contact.name}: {contact.number}
-            <button type="button" onClick={() => handleDeleteContact(contact.id)}>
+            <button
+              type="button"
+              onClick={() => handleDeleteContact(contact.id)}
+              className={css.deleteButton}
+            >
               Delete
             </button>
           </li>

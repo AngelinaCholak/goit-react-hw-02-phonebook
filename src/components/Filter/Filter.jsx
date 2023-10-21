@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import css from './Filter.module.css';
 
 export default class Filter extends Component {
   handleFilterChange = (event) => {
@@ -9,14 +10,15 @@ export default class Filter extends Component {
     const { filter } = this.props;
 
     return (
-      <div>
+      <div className={css.filterContainer}>
         <input
-          type="text"
-          name="filter"
-          value={filter}
-          onChange={this.handleFilterChange}
+           type="text"
+           name="filter"
+           className={css.filterInput}
+           value={filter}
+           onChange={this.handleFilterChange}
         />
-        <p>Find Contacts by name</p>
+        <p className={css.filterLabel}>Find Contacts by name</p>
       </div>
     );
   }

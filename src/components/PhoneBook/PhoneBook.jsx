@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import css from './PhoneBook.module.css';
 
 export default class PhoneBook extends Component {
   state = {
@@ -21,9 +22,10 @@ export default class PhoneBook extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h2>Name</h2>
+      <form className={css.phoneBookForm} onSubmit={this.handleSubmit}>
+        <h2 >Name</h2>
         <input
+          className={css.phoneBookInput}
           type="text"
           name="name"
           required
@@ -32,6 +34,7 @@ export default class PhoneBook extends Component {
         />
         <h2>Number</h2>
         <input
+          className={css.phoneBookInput}
           type="tel"
           name="number"
           required
@@ -39,7 +42,9 @@ export default class PhoneBook extends Component {
           onChange={this.handleInputChange}
         />
         <br />
-        <button type="submit">Add contact</button>
+        <button type="submit" className={css.phoneBookButton}>
+          Add contact
+        </button>
       </form>
     );
   }

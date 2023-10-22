@@ -15,8 +15,11 @@ export class App extends Component {
     filter: '',
   };
 
-  handleAddContact = (contactData) => {
-    const hasDuplicates = this.state.contacts.some((contact) => contact.name.toLowerCase() === contactData.name.toLowerCase());
+  handleAddContact = contactData => {
+    const hasDuplicates = this.state.contacts.some(
+      contact => contact.name.toLowerCase() === contactData.name.toLowerCase()
+    );
+
     if (hasDuplicates) {
       alert(`Contact with the name ${contactData.name} already exists.`);
       return;
@@ -27,32 +30,38 @@ export class App extends Component {
       id: nanoid(),
     };
 
-   this.setState((prevState) => ({
-    contacts: [...prevState.contacts, finalContact],
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, finalContact],
     }));
   };
 
-  handleDeleteContact = (id) => {
-  this.setState((prevState) => {
-    const updatedContacts = prevState.contacts.filter((contact) => contact.id !== id);
-    return {
-      contacts: updatedContacts,
-    };
-  });
-};
+  handleDeleteContact = id => {
+    this.setState(prevState => {
+      const updatedContacts = prevState.contacts.filter(
+        contact => contact.id !== id
+      );
+      return {
+        contacts: updatedContacts,
+      };
+    });
+  };
 
-  handleFilterChange = (filter) => {
+  handleFilterChange = filter => {
     this.setState({
       filter: filter,
     });
   };
 
-  render() {
+  getFilteredContacts = () => {
     const { contacts, filter } = this.state;
-    const filteredContacts = contacts.filter((contact) =>
-  contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
-);
- 
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  render() {
+    const { filter } = this.state;
+    const filteredContacts = this.getFilteredContacts();
 
     return (
       <div>

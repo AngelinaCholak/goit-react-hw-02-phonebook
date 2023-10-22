@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
-import css from './contacts.module.css'
+import PropTypes from 'prop-types';
+import css from './contacts.module.css';
 
 export default class Contacts extends Component {
-  render() {
-    const { contacts, filter, handleDeleteContact } = this.props;
+  static propTypes = {
+    contacts: PropTypes.array.isRequired,
+    handleDeleteContact: PropTypes.func.isRequired,
+  };
 
-    const filteredContacts = contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
+  render() {
+    const { contacts, handleDeleteContact } = this.props;
 
     return (
       <ul className={css.contactsList}>
-        {filteredContacts.map((contact) => (
+        {contacts.map((contact) => (
           <li key={contact.id}>
             {contact.name}: {contact.number}
             <button
-              type="button"
-              onClick={() => handleDeleteContact(contact.id)}
               className={css.deleteButton}
-            >
-              Delete
-            </button>
+              onClick={() => handleDeleteContact(contact.id)}>Delete</button>
           </li>
         ))}
       </ul>

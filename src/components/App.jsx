@@ -16,7 +16,7 @@ export class App extends Component {
   };
 
   handleAddContact = (contactData) => {
-    const hasDuplicates = this.state.contacts.some((contact) => contact.name === contactData.name);
+    const hasDuplicates = this.state.contacts.some((contact) => contact.name.toLowerCase() === contactData.name.toLowerCase());
     if (hasDuplicates) {
       alert(`Contact with the name ${contactData.name} already exists.`);
       return;
@@ -27,17 +27,19 @@ export class App extends Component {
       id: nanoid(),
     };
 
-    this.setState({
-      contacts: [...this.state.contacts, finalContact],
-    });
+   this.setState((prevState) => ({
+    contacts: [...prevState.contacts, finalContact],
+    }));
   };
 
   handleDeleteContact = (id) => {
-    const updatedContacts = this.state.contacts.filter((contact) => contact.id !== id);
-    this.setState({
+  this.setState((prevState) => {
+    const updatedContacts = prevState.contacts.filter((contact) => contact.id !== id);
+    return {
       contacts: updatedContacts,
-    });
-  };
+    };
+  });
+};
 
   handleFilterChange = (filter) => {
     this.setState({
@@ -47,6 +49,10 @@ export class App extends Component {
 
   render() {
     const { contacts, filter } = this.state;
+    const filteredContacts = contacts.filter((contact) =>
+  contact.name && contact.name.toLowerCase().includes(filter.toLowerCase())
+);
+ 
 
     return (
       <div>
@@ -55,8 +61,7 @@ export class App extends Component {
         <h2>Contacts</h2>
         <Filter filter={filter} handleFilterChange={this.handleFilterChange} />
         <Contacts
-          contacts={contacts}
-          filter={filter}
+          contacts={filteredContacts}
           handleDeleteContact={this.handleDeleteContact}
         />
       </div>
